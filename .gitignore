@@ -1,4 +1,4 @@
-newimm-domain/target/
+target/
 *.class
 .DS_Store
 .vscode/
