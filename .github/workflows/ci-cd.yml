@@ -20,17 +20,15 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: 'maven'
-        # Targets the subfolder path cleanly
-        cache-dependency-path: newimm-domain/pom.xml
+        # FIXED: Targets the pom.xml right inside the default checked-out directory tree
+        cache-dependency-path: "**/pom.xml"
 
     - name: Run Checkstyle Quality Gate
-      # Steps into the subfolder track before checking coding styles
+      # FIXED: Uses find-execution parameters to automatically find and check style rules anywhere in the repo
       run: |
-        cd newimm-domain
-        mvn checkstyle:check
+        mvn checkstyle:check -f $(find . -name pom.xml)
 
     - name: Build with Maven & Run 11 Unit Tests
-      # Steps into the subfolder track before compiling code and running tests
+      # FIXED: Uses explicit configuration targeting to compile code regardless of local path variations
       run: |
-        cd newimm-domain
-        mvn clean test
+        mvn clean test -f $(find . -name pom.xml)
