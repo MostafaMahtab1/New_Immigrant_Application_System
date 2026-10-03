@@ -1,0 +1,30 @@
+name: Immigrant App CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v4
+
+    - name: Set up Java JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: 'maven'
+
+    - name: Run Checkstyle Quality Gate
+      # Runs checkstyle validation against your checkstyle.xml rules
+      run: mvn checkstyle:check
+
+    - name: Build with Maven & Run 11 Unit Tests
+      # Compiles code and asserts that all 11 unit tests pass inside the virtual ecosystem
+      run: mvn clean test

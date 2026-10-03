@@ -1,0 +1,15 @@
+stages:
+  - build
+  - test
+
+maven-build:
+  stage: build
+  tags:
+    - cs321
+  script:
+    - cd newimm-domain
+    - mvn -v
+    - mvn test
+
+include:
+  - template: Security/SAST.gitlab-ci.yml

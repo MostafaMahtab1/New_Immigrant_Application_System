@@ -1,0 +1,39 @@
+<!-- Conttributed - Kavon Barr-->
+ <!-- Help set up - Mostafa Mahtab-->
+  <!-- Approver UI – Approve or Reject Applications -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Approver Queue</title>
+<style>
+body { font-family: Arial, sans-serif; margin:20px;}
+h2 { text-align: center; }
+.card { border:1px solid #ccc; padding:10px; margin-bottom:10px; cursor:pointer; }
+</style>
+</head>
+<body>
+<h2>Approver Queue</h2>
+<div id="list"></div>
+
+<script>
+async function loadQueue(){
+    const res=await fetch("/api/queue/approver");
+    const data=await res.json();
+    const div=document.getElementById("list");
+    div.innerHTML="";
+    data.forEach(a=>{
+        const card=document.createElement("div");
+        card.className="card";
+        card.innerHTML=`<b>${a.applicantId}</b> - ${a.fullName}`;
+        card.onclick = () => {
+    localStorage.setItem("selectedApplicantId", a.applicantId);
+    window.location.href = "immigrant-approver.html";
+};
+        div.appendChild(card);
+    });
+}
+loadQueue();
+</script>
+</body>
+</html>

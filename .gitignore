@@ -1,0 +1,5 @@
+newimm-domain/target/
+*.class
+.DS_Store
+.vscode/
+.idea/
