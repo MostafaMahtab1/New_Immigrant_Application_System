@@ -1,4 +1,4 @@
-// Contributor - Shane Brickhead, Kavon Barr, Mostafa Mahtab
+// Contributor - Shane Birckhead, Kavon Barr, Mostafa Mahtab
 // This is the Immigrant class. It implements Hash Map data structure.
 // Making this change to fulfill the Feature Branch requirement - Mostafa Mahtab
 

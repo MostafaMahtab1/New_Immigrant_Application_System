@@ -1,4 +1,4 @@
-// Added by Shane Brickhead 
+// Added by Shane Birckhead 
 // main method to run Spring Boot application
 package edu.gmu.cs321;
 

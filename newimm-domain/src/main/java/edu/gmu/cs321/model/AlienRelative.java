@@ -1,9 +1,17 @@
-// Contributed by Shane Brickhead
+// Contributed by Shane Birckhead
 // This file define all the private fields and the getter and setter methods for alien relatives,
 package edu.gmu.cs321.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "alien_relative")
