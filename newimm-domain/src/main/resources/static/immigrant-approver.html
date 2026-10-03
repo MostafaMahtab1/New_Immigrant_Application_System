@@ -1,0 +1,156 @@
+<!-- Conttributed - Kavon Barr-->
+ <!-- Help set up - Mostafa Mahtab-->
+<!-- Approver UI – Approve or Reject Applications -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Approver Queue – Review Applications</title>
+<style>
+    body { font-family: Arial, sans-serif; background-color: #f8f9fa; margin: 0; padding: 20px; }
+    h2 { text-align: center; margin-bottom: 15px; }
+    .app-list { max-width: 1000px; margin: auto; }
+    .app-card { background: #fff; border-radius: 10px; padding: 15px; margin-bottom: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    fieldset { border: 1px solid #ccc; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+    legend { font-weight: bold; padding: 0 8px; }
+    label { display: block; margin-top: 8px; font-weight: bold; }
+    input { width: 100%; padding: 6px; margin-top: 3px; border: 1px solid #ccc; border-radius: 4px; background-color: #e9ecef; }
+    input:read-only { background-color: #e9ecef; }
+    .alien-relative { background: #f1f3f5; padding: 10px; border-radius: 8px; margin-bottom: 10px; }
+    .actions { text-align: center; margin-top: 10px; }
+button {
+  background-color: #00bfff; /* Light blue */
+  color: #000000; /* Black */
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin: 0 5px;
+}
+</style>
+</head>
+<body>
+
+<h2>Approver Queue – Approve or Reject Applications</h2>
+<div class="app-list" id="appList"></div>
+
+<script>
+const appList = document.getElementById("appList");
+
+// Fetch applications reviewed by reviewers (status = REVIEWED)
+async function fetchReviewedApps() {
+    appList.innerHTML = "<p>Loading...</p>";
+    try {
+        const response = await fetch("/api/queue/approver");
+        const apps = await response.json();
+        if (apps.length === 0) {
+            appList.innerHTML = "<p>No applications awaiting approval.</p>";
+            return;
+        }
+
+        appList.innerHTML = "";
+        apps.forEach(app => renderApp(app));
+    } catch (err) {
+        console.error(err);
+        appList.innerHTML = "<p>Failed to load applications.</p>";
+    }
+}
+
+// Render each application card
+function renderApp(app) {
+    const card = document.createElement("div");
+    card.classList.add("app-card");
+
+    card.innerHTML = `
+        <fieldset>
+            <legend>Applicant Information – ID ${app.applicantId}</legend>
+            <label>Full Name</label>
+            <input type="text" value="${app.fullName}" readonly>
+            <label>Date of Birth</label>
+            <input type="date" value="${app.dob}" readonly>
+            <label>Address</label>
+            <input type="text" value="${app.address}" readonly>
+            <label>Phone</label>
+            <input type="tel" value="${app.phone}" readonly>
+            <label>Email</label>
+            <input type="email" value="${app.email}" readonly>
+        </fieldset>
+
+        <fieldset>
+            <legend>Alien Relatives</legend>
+            <div class="alienRelativeList">
+                ${app.alienRelatives.map(rel => `
+                    <div class="alien-relative">
+                        <label>Full Name</label>
+                        <input type="text" value="${rel.fullName}" readonly>
+                        <label>Date of Birth</label>
+                        <input type="date" value="${rel.dob}" readonly>
+                        <label>Address</label>
+                        <input type="text" value="${rel.address}" readonly>
+                        <label>Phone</label>
+                        <input type="tel" value="${rel.phone}" readonly>
+                        <label>Email</label>
+                        <input type="email" value="${rel.email}" readonly>
+                    </div>
+                `).join('')}
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Decision / Notes</legend>
+            <label>Notes (optional for rejection)</label>
+            <textarea class="notes" placeholder="Enter reason if rejecting"></textarea>
+        </fieldset>
+
+        <div class="actions">
+            <button class="approveBtn">✅ Approve</button>
+            <button class="rejectBtn">❌ Reject</button>
+        </div>
+    `;
+
+    // Approve
+    card.querySelector(".approveBtn").addEventListener("click", async () => {
+        try {
+            const res = await fetch(`/api/immigrant/${app.applicantId}/status?status=APPROVED`, { method: "PUT" });
+            if (res.ok) {
+                alert(`✅ Application ${app.applicantId} approved. Notification sent to applicant!`);
+                fetchReviewedApps(); // Refresh queue
+            } else alert("❌ Failed to approve!");
+        } catch (err) {
+            console.error(err);
+            alert("❌ Error approving application!");
+        }
+    });
+
+    // Reject
+    card.querySelector(".rejectBtn").addEventListener("click", async () => {
+        const notes = card.querySelector(".notes").value;
+        if (!notes) {
+            alert("⚠️ Please enter a reason for rejection!");
+            return;
+        }
+
+        try {
+            const res = await fetch(`/api/immigrant/${app.applicantId}/status?status=REJECTED`, { method: "PUT" });
+            if (res.ok) {
+                alert(`❌ Application ${app.applicantId} rejected with note: ${notes}`);
+                fetchReviewedApps(); // Refresh queue
+            } else alert("❌ Failed to reject!");
+        } catch (err) {
+            console.error(err);
+            alert("❌ Error rejecting application!");
+        }
+    });
+
+    appList.appendChild(card);
+}
+
+// Initial fetch
+fetchReviewedApps();
+</script>
+
+</body>
+</html>
+

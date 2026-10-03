@@ -1,0 +1,127 @@
+<!-- Contributed - Mostafa Mahtab -->
+<!-- Reviewer Form – // main UI for reviewer.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Reviewer Form</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+h2 { text-align: center; }
+
+label { display:block; margin-top:10px; font-weight:bold; }
+input, textarea { width:400px; padding:5px; margin-top:3px; }
+
+.actions { margin-top:20px; }
+button { margin-right:10px; padding:6px 12px; }
+.save-notice { color: #007bff; display: none; margin-top: 10px; }
+.alien-relative { margin-top:10px; border:1px solid #ccc; padding:8px; }
+</style>
+</head>
+<body>
+<h2>Review Application</h2>
+
+<label for="applicantId">Applicant ID</label><input id="applicantId" readonly>
+<label for="fullName">Full Name</label><input id="fullName">
+<label for="dob">DOB</label><input type="date" id="dob">
+<label for="address">Address</label><textarea id="address"></textarea>
+<label for="email">Email</label><input type="email" id="email">
+<label for="phone">Phone</label><input type="tel" id="phone">
+
+<h3>Alien Relatives</h3>
+<div id="alienRelatives"></div>
+<button id="addRelativeBtn">+ Add Relative</button>
+
+<div class="actions">
+<button id="saveBtn">💾 Save</button>
+<button id="submitBtn">📤 Submit to Approver</button>
+</div>
+<p class="save-notice" id="saveNotice">💾 Saved!</p>
+
+
+<script>
+const id = localStorage.getItem("selectedApplicantId");
+const alienDiv = document.getElementById("alienRelatives");
+
+function addRelative(rel={}) {
+    const div = document.createElement("div");
+    div.classList.add("alien-relative");
+    div.innerHTML = `
+        <label>Full Name</label><input type="text" value="${rel.fullName||''}">
+        <label>DOB</label><input type="date" value="${rel.dob||''}">
+        <label>Address</label><input type="text" value="${rel.address||''}">
+        <label>Email</label><input type="email" value="${rel.email||''}">
+        <label>Phone</label><input type="tel" value="${rel.phone||''}">
+        <button type="button">Remove</button>`;
+    div.querySelector("button").onclick = ()=>div.remove();
+    alienDiv.appendChild(div);
+}
+
+async function loadForm() {
+    const res = await fetch("/api/immigrant/"+id);
+    const data = await res.json();
+    document.getElementById("applicantId").value = data.applicantId;
+    document.getElementById("fullName").value = data.fullName;
+    document.getElementById("dob").value = data.dob;
+    document.getElementById("address").value = data.address;
+    document.getElementById("email").value = data.email;
+    document.getElementById("phone").value = data.phone;
+    data.alienRelatives.forEach(r=>addRelative(r));
+}
+loadForm();
+
+document.getElementById("addRelativeBtn").onclick = ()=>addRelative();
+
+function collectRelatives() {
+    const list=[];
+    alienDiv.querySelectorAll(".alien-relative").forEach(d=>{
+        const inputs = d.querySelectorAll("input");
+        list.push({
+            fullName:inputs[0].value,
+            dob:inputs[1].value,
+            address:inputs[2].value,
+            email:inputs[3].value,
+            phone:inputs[4].value
+        });
+    });
+    return list;
+}
+
+async function save(status=null){
+    const data={
+        applicantId:document.getElementById("applicantId").value,
+        fullName:document.getElementById("fullName").value,
+        dob:document.getElementById("dob").value,
+        address:document.getElementById("address").value,
+        email:document.getElementById("email").value,
+        phone:document.getElementById("phone").value,
+        alienRelatives:collectRelatives(),
+        status
+    };
+    await fetch("/api/immigrant/"+data.applicantId,{
+        method:"PUT",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(data)
+    });
+}
+
+//document.getElementById("saveBtn").onclick = ()=>save();
+
+document.getElementById("saveBtn").onclick = async () => {
+    await save("IN_REVIEW");   // ← Keep form in reviewer state
+    document.getElementById("saveNotice").style.display = "block";
+    setTimeout(()=>document.getElementById("saveNotice").style.display="none", 1500);
+};
+
+
+document.getElementById("submitBtn").onclick = async ()=>{
+    await save("REVIEWED");
+    alert("✅ Submitted to Approver Queue!");
+    window.location.href="dataEntry-review_queue.html";
+};
+</script>
+</body>
+</html>

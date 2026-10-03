@@ -1,0 +1,55 @@
+
+services:
+  # 1. Database Layer (Persistent MySQL)
+  mysql-db:
+    image: mysql:8.0
+    container_name: immigrant-mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: immigrant_db
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      # This named volume preserves database data on hard drive permanently,
+      # comment out to stop persistance
+      - mysql_data:/var/lib/mysql
+    networks:
+      - immigrant-network
+
+  # 2. Application Backend Layer (Spring Boot REST API)
+  backend-app:
+    build: .
+    container_name: immigrant-backend
+    restart: always
+    depends_on:
+      - mysql-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/immigrant_db?allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=rootpassword
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - immigrant-network
+
+  # 3. Security & Reverse Proxy Layer (Nginx)
+  nginx-proxy:
+    image: nginx:alpine
+    container_name: immigrant-nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - backend-app
+    networks:
+      - immigrant-network
+
+volumes:
+  # Declare the persistent named volume here
+  mysql_data:
+
+networks:
+  immigrant-network:
+    driver: bridge

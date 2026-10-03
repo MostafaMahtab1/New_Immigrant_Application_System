@@ -1,0 +1,15 @@
+# Target directory (compiled Java binaries)
+target/
+*.class
+
+# Log files
+*.log
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# IDE configuration folders
+.vscode/
+.idea/
+*.iml
