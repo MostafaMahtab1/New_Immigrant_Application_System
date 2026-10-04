@@ -39,80 +39,80 @@ public class ImmigrantEntity {
     // --- Getters and Setters ---
 
     /** Gets the applicant ID. */
-    public String getApplicantId() { 
-        return applicantId; 
+    public String getApplicantId() {
+        return applicantId;
     }
-    
+
     /** Sets the applicant ID. */
-    public void setApplicantId(final String applicantId) { 
-        this.applicantId = applicantId; 
+    public void setApplicantId(final String applicantId) {
+        this.applicantId = applicantId;
     }
 
     /** Gets the full name. */
-    public String getFullName() { 
-        return fullName; 
+    public String getFullName() {
+        return fullName;
     }
-    
+
     /** Sets the full name. */
-    public void setFullName(final String fullName) { 
-        this.fullName = fullName; 
+    public void setFullName(final String fullName) {
+        this.fullName = fullName;
     }
 
     /** Gets the date of birth. */
-    public String getDob() { 
-        return dob; 
+    public String getDob() {
+        return dob;
     }
-    
+
     /** Sets the date of birth. */
-    public void setDob(final String dob) { 
-        this.dob = dob; 
+    public void setDob(final String dob) {
+        this.dob = dob;
     }
 
     /** Gets the address. */
-    public String getAddress() { 
-        return address; 
+    public String getAddress() {
+        return address;
     }
-    
+
     /** Sets the address. */
-    public void setAddress(final String address) { 
-        this.address = address; 
+    public void setAddress(final String address) {
+        this.address = address;
     }
 
     /** Gets the phone number. */
-    public String getPhone() { 
-        return phone; 
+    public String getPhone() {
+        return phone;
     }
-    
+
     /** Sets the phone number. */
-    public void setPhone(final String phone) { 
-        this.phone = phone; 
+    public void setPhone(final String phone) {
+        this.phone = phone;
     }
 
     /** Gets the email address. */
-    public String getEmail() { 
-        return email; 
+    public String getEmail() {
+        return email;
     }
-    
+
     /** Sets the email address. */
-    public void setEmail(final String email) { 
-        this.email = email; 
+    public void setEmail(final String email) {
+        this.email = email;
     }
 
     /** Gets the pipeline workflow status. */
-    public String getStatus() { 
-        return status; 
+    public String getStatus() {
+        return status;
     }
-    
+
     /** Sets the pipeline workflow status. */
-    public void setStatus(final String status) { 
-        this.status = status; 
+    public void setStatus(final String status) {
+        this.status = status;
     }
 
     /** Gets the list of associated alien relatives. */
-    public List<AlienRelative> getAlienRelatives() { 
-        return alienRelatives; 
+    public List<AlienRelative> getAlienRelatives() {
+        return alienRelatives;
     }
-    
+
     /** Sets the list of associated alien relatives and syncs references. */
     public void setAlienRelatives(final List<AlienRelative> alienRelatives) {
         this.alienRelatives.clear();
