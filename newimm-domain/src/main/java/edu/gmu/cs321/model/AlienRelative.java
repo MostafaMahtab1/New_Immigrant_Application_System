@@ -1,4 +1,5 @@
 // Contributed by Shane Birckhead
+// Cleanup to meet the ci/cd pipeline requirements with javadoc, explicit import by Mostafa Mahtab.
 // This file define all the private fields and the getter and setter methods for alien relatives,
 package edu.gmu.cs321.model;
 
@@ -13,6 +14,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * Entity class representing an Alien Relative linked to an immigrant application.
+ */
 @Entity
 @Table(name = "alien_relative")
 public class AlienRelative {
@@ -33,24 +37,74 @@ public class AlienRelative {
     private ImmigrantEntity immigrant;
 
     // --- Getters & Setters ---
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
 
-    public String getFullName() { return fullName; }
-    public void setFullName(String fullName) { this.fullName = fullName; }
+    /** Gets the relative record primary key ID. */
+    public Long getId() { 
+        return id; 
+    }
 
-    public String getDob() { return dob; }
-    public void setDob(String dob) { this.dob = dob; }
+    /** Sets the relative record primary key ID. */
+    public void setId(final Long id) { 
+        this.id = id; 
+    }
 
-    public String getAddress() { return address; }
-    public void setAddress(String address) { this.address = address; }
+    /** Gets the relative's full name. */
+    public String getFullName() { 
+        return fullName; 
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    /** Sets the relative's full name. */
+    public void setFullName(final String fullName) { 
+        this.fullName = fullName; 
+    }
 
-    public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
+    /** Gets the relative's date of birth. */
+    public String getDob() { 
+        return dob; 
+    }
 
-    public ImmigrantEntity getImmigrant() { return immigrant; }
-    public void setImmigrant(ImmigrantEntity immigrant) { this.immigrant = immigrant; }
+    /** Sets the relative's date of birth. */
+    public void setDob(final String dob) { 
+        this.dob = dob; 
+    }
+
+    /** Gets the relative's residential address. */
+    public String getAddress() { 
+        return address; 
+    }
+
+    /** Sets the relative's residential address. */
+    public void setAddress(final String address) { 
+        this.address = address; 
+    }
+
+    /** Gets the relative's email address. */
+    public String getEmail() { 
+        return email; 
+    }
+
+    /** Sets the relative's email address. */
+    public void setEmail(final String email) { 
+        this.email = email; 
+    }
+
+    /** Gets the relative's phone number. */
+    public String getPhone() { 
+        return phone; 
+    }
+
+    /** Sets the relative's phone number. */
+    public void setPhone(final String phone) { 
+        this.phone = phone; 
+    }
+
+    /** Gets the associated primary immigrant applicant. */
+    public ImmigrantEntity getImmigrant() { 
+        return immigrant; 
+    }
+
+    /** Sets the associated primary immigrant applicant reference. */
+    public void setImmigrant(final ImmigrantEntity immigrant) { 
+        this.immigrant = immigrant; 
+    }
 }
