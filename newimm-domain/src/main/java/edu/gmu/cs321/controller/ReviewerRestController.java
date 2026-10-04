@@ -4,8 +4,10 @@ package edu.gmu.cs321.controller;
 
 import edu.gmu.cs321.model.ImmigrantEntity;
 import edu.gmu.cs321.service.ImmigrantService;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 @RestController

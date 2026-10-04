@@ -110,15 +110,15 @@ public class Immigrant {
                                       String dob, String status,
                                       String phone, String email) {
 
-        if (firstName == null || firstName.isEmpty()){
+        if (firstName == null || firstName.isEmpty()) {
 
             return CODE_INVALID_FIRST_NAME;
         }
 
-        if (lastName == null || lastName.isEmpty() || lastName.matches(".*\\d.*")){
+        if (lastName == null || lastName.isEmpty() || lastName.matches(".*\\d.*")) {
             return CODE_INVALID_LAST_NAME;
         }
-        if (!dob.matches("\\d{2}/\\d{2}/\\d{4}")){
+        if (!dob.matches("\\d{2}/\\d{2}/\\d{4}")) {
             return CODE_INVALID_DOB;
         }
         if (!phonePattern.matcher(phone).matches()) {
@@ -173,13 +173,19 @@ public class Immigrant {
 
     // ======== Update Methods ========
     public int updateFirstName(String name) {
-        if (name == null || name.isEmpty()) return CODE_INVALID_FIRST_NAME;
+        if (name == null || name.isEmpty()) {
+            return CODE_INVALID_FIRST_NAME;
+        }
         this.firstName = name;
         return CODE_SUCCESS;
     }
 
     public int updateLastName(String name) {
-        if (name == null || name.isEmpty() || name.matches(".*\\d.*")) return CODE_INVALID_LAST_NAME;
+        //if (name == null || name.isEmpty() || name.matches(".*\\d.*")){
+        //if (name != null && !name.isEmpty() && name.matches("^[^0-9]*$")) {
+        if (name != null && !name.isEmpty() && name.matches("\\D*")) {
+            return CODE_INVALID_LAST_NAME;
+        }
         this.lastName = name;
         return CODE_SUCCESS;
     }
