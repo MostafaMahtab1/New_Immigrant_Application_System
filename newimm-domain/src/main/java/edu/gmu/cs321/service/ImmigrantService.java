@@ -45,7 +45,7 @@ public class ImmigrantService {
 
         @Transactional
     public ImmigrantEntity openFormForReview(String applicantId) {
-        ImmigrantEntity immigrant = repo.findById(applicantId)
+        final ImmigrantEntity immigrant = repo.findById(applicantId)
                 .orElseThrow(() -> new RuntimeException("Form not found: " + applicantId));
         if ("DATA_ENTRY_SUBMITTED".equals(immigrant.getStatus())) {
             immigrant.setStatus("IN_REVIEW");

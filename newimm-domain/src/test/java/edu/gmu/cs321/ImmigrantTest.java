@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,11 +35,11 @@ class ImmigrantTest {
                 "703-555-1234", "maria.lopez@email.com"
         );
 
-        assertEquals(Immigrant.CODE_SUCCESS, res.code);
-        assertNotNull(res.alienNumber);
-        assertTrue(res.alienNumber.startsWith("A-"));
+        assertEquals(Immigrant.CODE_SUCCESS, res.getCode());
+        assertNotNull(res.getAlienNumber());
+        assertTrue(res.getAlienNumber().startsWith("A-"));
 
-        Immigrant im = Immigrant.getImmigrant(res.alienNumber);
+        Immigrant im = Immigrant.getImmigrant(res.getAlienNumber());
         assertNotNull(im);
 
         assertEquals("Maria", im.getFirstName());
@@ -46,7 +48,7 @@ class ImmigrantTest {
         assertEquals("Green Card", im.getImmigrationStatus());
         assertEquals("703-555-1234", im.getPhone());
         assertEquals("maria.lopez@email.com", im.getEmail());
-        
+
         assertEquals("VA", im.getState());
         assertEquals("22201", im.getZip());
     }
@@ -184,6 +186,9 @@ class ImmigrantTest {
                 "Visitor", "703-111-2222", "john@example.com"
         );
 
-        assertThrows(IllegalArgumentException.class, im::getAlienRelative);
+        //assertThrows(IllegalArgumentException.class, im::getAlienRelative);
+        Throwable exception = assertThrows(IllegalArgumentException.class, im::getAlienRelative);
+         assertNotNull(exception);
+
     }
 }

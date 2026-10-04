@@ -67,10 +67,26 @@ public class Immigrant {
 
     // ======== CreateResult Class ========
     public static class CreateResult {
-        public final int code;
-        public final String alienNumber;
+        private final int code;
+        private final String alienNumber;
 
-        public CreateResult(int code, String alienNumber) {
+        /** Gets the operation status return code. */
+        public int getCode() {
+            return code;
+        }
+
+        /** Gets the unique assigned alien registration identifier string. */
+        public String getAlienNumber() {
+            return alienNumber;
+        }
+
+        /**
+         * Constructs a new CreateResult tracking operational parameters.
+         *
+         * @param code the status return code
+         * @param alienNumber the unique assigned registration string
+         */
+        public CreateResult(final int code, final String alienNumber) {
             this.code = code;
             this.alienNumber = alienNumber;
         }
