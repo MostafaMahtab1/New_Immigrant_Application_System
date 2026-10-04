@@ -67,8 +67,8 @@ public class Immigrant {
 
     // ======== CreateResult Class ========
     public static class CreateResult {
-        private final int code;
-        private final String alienNumber;
+        public final int code;
+        public final String alienNumber;
 
         public CreateResult(int code, String alienNumber) {
             this.code = code;
