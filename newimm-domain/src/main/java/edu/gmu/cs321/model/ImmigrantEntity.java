@@ -1,7 +1,7 @@
 // Contributed by Mostafa Mahtab
 // Defines the private fields and getter and setters for the primary immigrant applicant.
-package edu.gmu.cs321.model;
 
+package edu.gmu.cs321.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -9,7 +9,6 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.CascadeType;
-
 import java.util.ArrayList;
 import java.util.List;
 

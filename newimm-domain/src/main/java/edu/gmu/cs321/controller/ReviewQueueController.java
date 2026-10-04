@@ -1,13 +1,12 @@
 // Contributed by Mostafa Mahtab
-package edu.gmu.cs321.controller;
 
+package edu.gmu.cs321.controller;
 import edu.gmu.cs321.model.ImmigrantEntity;
 import edu.gmu.cs321.service.ImmigrantService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
 import java.util.List;
 
 @Controller

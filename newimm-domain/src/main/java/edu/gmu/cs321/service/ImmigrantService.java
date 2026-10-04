@@ -1,20 +1,16 @@
 // Contributed by Mostafa Mahtab
 // This file helps with all the status update services throughout the workflow
-package edu.gmu.cs321.service;
 
+package edu.gmu.cs321.service;
 import edu.gmu.cs321.model.ImmigrantEntity;
 import edu.gmu.cs321.repository.ImmigrantRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-
 
 @Service
 public class ImmigrantService {
-
 
     private ImmigrantRepository repo;
 
@@ -39,9 +35,6 @@ public class ImmigrantService {
         e.setStatus(status);
         repo.save(e);
     }
-
-
-
 
         @Transactional
     public ImmigrantEntity openFormForReview(String applicantId) {

@@ -1,9 +1,7 @@
 // Contributed by Mostafa Mahtab
 // helps with the mapping of the ImmigrantService system
 package edu.gmu.cs321.controller;
-
 import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

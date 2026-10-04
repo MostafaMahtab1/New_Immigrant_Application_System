@@ -1,7 +1,6 @@
 // Contributed by Mostafa Mahtab
 //Helps reviewer to get all/single submitted applications from the data-entry.
 package edu.gmu.cs321.controller;
-
 import edu.gmu.cs321.model.ImmigrantEntity;
 import edu.gmu.cs321.service.ImmigrantService;
 import org.springframework.web.bind.annotation.GetMapping;

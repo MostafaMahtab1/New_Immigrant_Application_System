@@ -2,7 +2,7 @@
 
 ## Project Origin & Attribution
 This application originated as a core academic group project for **CS321 at George Mason University**.
-* **Original System Contributors:** Mostafa Mahtab, Shane Birkhead, Kavon Barr
+* **Original System Contributors:** Mostafa Mahtab, Kavon Barr, Shane Birckhead
 * **Core Group Scope:** Initial Java Spring Boot REST services, data object schemas, and internal business logic queues.
 
 ## Individual Enterprise Upgrades (By Mostafa Mahtab)
