@@ -2,16 +2,31 @@
 // helps with the mapping of the ImmigrantService system
 package edu.gmu.cs321.controller;
 
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import edu.gmu.cs321.model.ImmigrantEntity;
 import edu.gmu.cs321.service.ImmigrantService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "*")
+// @crossOrigin (CORS - cross origin resouce sharing) has be changed to only point to specific domains to reduce CSRF risk
+@CrossOrigin(origins = """
+        http://localhost/immigrant-data_entry.html
+        http://localhost/dataEntry-review_queue.html
+        http://localhost/approver-queue.html
+        http://localhost/immigrant-approver.html""")
+
 public class ImmigrantController {
 
     private final ImmigrantService service;

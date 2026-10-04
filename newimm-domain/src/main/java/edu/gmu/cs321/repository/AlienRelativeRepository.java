@@ -3,10 +3,12 @@
 // Implements list data structure to find AlienRelatives
 package edu.gmu.cs321.repository;
 
-import edu.gmu.cs321.model.AlienRelative;
-import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import edu.gmu.cs321.model.AlienRelative;
+
 public interface AlienRelativeRepository extends JpaRepository<AlienRelative, Long> {
-    List<AlienRelative> findByImmigrant_ApplicantId(String immigrantId);
+    List<AlienRelative> findByImmigrantApplicantId(String immigrantId);
 }

@@ -49,9 +49,10 @@ public class Immigrant {
     public Immigrant(String name, String dob, String state, String zip,
                      String status, String phone, String email) {
 
-        String[] parts = name.split(" ");
-        if (parts.length < 2) throw new IllegalArgumentException("Invalid name");
-
+        final String[] parts = name.split(" ");
+        if (parts.length < 2) {
+            throw new IllegalArgumentException("Invalid name");
+        }
         this.firstName = parts[0];
         this.lastName = parts[1];
         this.dob = dob;
@@ -66,8 +67,8 @@ public class Immigrant {
 
     // ======== CreateResult Class ========
     public static class CreateResult {
-        public final int code;
-        public final String alienNumber;
+        private final int code;
+        private final String alienNumber;
 
         public CreateResult(int code, String alienNumber) {
             this.code = code;
@@ -109,30 +110,33 @@ public class Immigrant {
                                       String dob, String status,
                                       String phone, String email) {
 
-        if (firstName == null || firstName.isEmpty())
+        if (firstName == null || firstName.isEmpty()){
+
             return CODE_INVALID_FIRST_NAME;
+        }
 
-        if (lastName == null || lastName.isEmpty() || lastName.matches(".*\\d.*"))
+        if (lastName == null || lastName.isEmpty() || lastName.matches(".*\\d.*")){
             return CODE_INVALID_LAST_NAME;
-
-        if (!dob.matches("\\d{2}/\\d{2}/\\d{4}"))
+        }
+        if (!dob.matches("\\d{2}/\\d{2}/\\d{4}")){
             return CODE_INVALID_DOB;
-
-        if (!phonePattern.matcher(phone).matches())
+        }
+        if (!phonePattern.matcher(phone).matches()) {
             return CODE_INVALID_PHONE;
-
-        if (!emailPattern.matcher(email).matches())
+        }
+        if (!emailPattern.matcher(email).matches()) {
             return CODE_INVALID_EMAIL;
-
-        if (street.isEmpty() || city.isEmpty() || !isValidState(state))
+        }
+        if (street.isEmpty() || city.isEmpty() || !isValidState(state)) {
             return CODE_INVALID_ADDRESS_CITY_STATE;
+        }
 
-        if (!zipPattern.matcher(zip).matches())
+        if (!zipPattern.matcher(zip).matches()) {
             return CODE_INVALID_ZIP;
-
-        if (!isValidStatus(status))
+        }
+        if (!isValidStatus(status)) {
             return CODE_INVALID_STATUS;
-
+        }
         return CODE_SUCCESS;
     }
 
