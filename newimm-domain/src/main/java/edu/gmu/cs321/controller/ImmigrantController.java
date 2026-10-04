@@ -45,8 +45,10 @@ public class ImmigrantController {
     // GET one (Reviewer, Approver use this)
     @GetMapping("/immigrant/{id}")
     public ResponseEntity<ImmigrantEntity> get(@PathVariable String id) {
-        ImmigrantEntity e = service.findById(id);
-        if (e == null) return ResponseEntity.notFound().build();
+        final ImmigrantEntity e = service.findById(id);
+        if (e == null) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(e);
     }
 
@@ -56,7 +58,7 @@ public ResponseEntity<ImmigrantEntity> update(
         @PathVariable String id,
         @RequestBody ImmigrantEntity newData
 ) {
-    ImmigrantEntity existing = service.findById(id);
+    final ImmigrantEntity existing = service.findById(id);
     if (existing == null) {
         return ResponseEntity.notFound().build();
     }

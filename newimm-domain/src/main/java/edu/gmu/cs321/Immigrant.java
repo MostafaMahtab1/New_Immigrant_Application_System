@@ -84,7 +84,7 @@ public class Immigrant {
                                                String phone, String email) {
 
         // Validate inputs
-        int code = validateInputs(firstName, lastName, street, city, state, zip, dob, status, phone, email);
+        final int code  = validateInputs(firstName, lastName, street, city, state, zip, dob, status, phone, email);
         if (code != CODE_SUCCESS) {
             return new CreateResult(code, null);
         }
@@ -95,7 +95,7 @@ public class Immigrant {
         }
 
         // Create immigrant
-        Immigrant im = new Immigrant(firstName + " " + lastName,
+        final Immigrant im = new Immigrant(firstName + " " + lastName,
                                      dob, state, zip, status, phone, email);
 
         registry.put(im.alienNumber, im);
@@ -191,34 +191,40 @@ public class Immigrant {
     }
 
     public int updateDOB(String dob) {
-        if (!dob.matches("\\d{2}/\\d{2}/\\d{4}")) return CODE_INVALID_DOB;
+        if (!dob.matches("\\d{2}/\\d{2}/\\d{4}")) {
+            return CODE_INVALID_DOB;
+        }
         this.dob = dob;
         return CODE_SUCCESS;
     }
 
     public void updatePhone(String phone) {
-        if (!phonePattern.matcher(phone).matches())
+        if (!phonePattern.matcher(phone).matches()) {
             throw new IllegalArgumentException("Invalid phone");
+        }
         this.phone = phone;
     }
 
     public void updateEmail(String email) {
-        if (!emailPattern.matcher(email).matches())
+        if (!emailPattern.matcher(email).matches()) {
             throw new IllegalArgumentException("Invalid email");
+        }
         this.email = email;
     }
 
     public void updateAddressCityState(String street, String city, String st) {
-        if (street.isEmpty() || city.isEmpty() || !isValidState(st))
+        if (street.isEmpty() || city.isEmpty() || !isValidState(st)) {
             throw new IllegalArgumentException("Invalid address/city/state");
+        }
 
         this.city = city;
         this.state = st;
     }
 
     public void setZip(String zip) {
-        if (!zipPattern.matcher(zip).matches())
+        if (!zipPattern.matcher(zip).matches()) {
             throw new IllegalArgumentException("Invalid zip");
+        }
         this.zip = zip;
     }
 
@@ -227,8 +233,9 @@ public class Immigrant {
     }
 
     public Immigrant getAlienRelative() {
-        if (this.alienRelative == null)
+        if (this.alienRelative == null) {
             throw new IllegalArgumentException("No relative set");
+        }
         return this.alienRelative;
     }
 

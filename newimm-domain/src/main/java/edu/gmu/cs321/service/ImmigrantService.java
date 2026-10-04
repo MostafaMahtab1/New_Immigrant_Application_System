@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class ImmigrantService {
 
-    
+
     private ImmigrantRepository repo;
 
     @Autowired
@@ -32,8 +32,10 @@ public class ImmigrantService {
     }
 
     public void updateStatus(String id, String status) {
-        ImmigrantEntity e = findById(id);
-        if (e == null) return;
+        final ImmigrantEntity e = findById(id);
+        if (e == null) {
+            return;
+        }
         e.setStatus(status);
         repo.save(e);
     }

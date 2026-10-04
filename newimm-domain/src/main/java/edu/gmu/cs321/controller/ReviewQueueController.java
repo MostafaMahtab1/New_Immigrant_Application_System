@@ -22,7 +22,7 @@ public class ReviewQueueController {
     // Show all forms pending review
 @GetMapping("/review-queue")
 public String reviewQueue(Model model) {
-    List<ImmigrantEntity> pendingForms = immigrantService.getReviewerQueue();  // <-- use getReviewerQueue()
+    final List<ImmigrantEntity> pendingForms = immigrantService.getReviewerQueue();  // <-- use getReviewerQueue()
     model.addAttribute("immigrants", pendingForms);
     return "reviewQueue";  // Thymeleaf template: reviewQueue.html
 }
@@ -31,7 +31,7 @@ public String reviewQueue(Model model) {
     // Open a single form for review
     @GetMapping("/review-queue/{applicantId}")
     public String openForm(@PathVariable String applicantId, Model model) {
-        ImmigrantEntity form = immigrantService.openFormForReview(applicantId);
+        final ImmigrantEntity form = immigrantService.openFormForReview(applicantId);
         model.addAttribute("immigrant", form);
         return "reviewForm";  // Thymeleaf template: reviewForm.html
     }

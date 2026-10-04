@@ -69,7 +69,7 @@ public class AlienRelative {
     }
 
     /** Gets the relative's residential address. */
-    public String getAddress(){
+    public String getAddress() {
         return address;
     }
 
